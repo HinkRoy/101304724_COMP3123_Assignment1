@@ -29,8 +29,8 @@ router.post('/signup', async function(req, res, next) {
     return;
   }
 
-  let matchedUser = User.findOne({ username: req.body.username });
-  if (matchedUser.length > 0) {
+  let matchedUser = await User.findOne({ username: req.body.username });
+  if (matchedUser) {
     res.json({
       status: false,
       message: "Duplicate username!"
@@ -38,8 +38,8 @@ router.post('/signup', async function(req, res, next) {
     return;
   }
 
-  matchedUser = User.findOne({ email: req.body.email });
-  if (matchedUser.length > 0) {
+  matchedUser = await User.findOne({ email: req.body.email });
+  if (matchedUser) {
     res.json({
       status: false,
       message: "Duplicate email!"
@@ -50,7 +50,12 @@ router.post('/signup', async function(req, res, next) {
   try {
     const user = new User(req.body);
     await user.save();
-    res.status(201).send();
+    res.status(201).send({
+      status: true,
+      username: req.body.username,
+      email: req.body.email,
+      message: "User signup successfully"
+    });
   } catch (e) {
     res.status(500).send();
   }

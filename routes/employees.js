@@ -37,8 +37,8 @@ router.post('/', async function(req, res, next) {
     return;
   }
 
-  let matchedEmployee = Employee.findOne({ email: email });
-  if (matchedEmployee.length > 0) {
+  let matchedEmployee = await Employee.findOne({ email: email });
+  if (matchedEmployee) {
     res.json({
       status: false,
       message: "Duplicate email!"
