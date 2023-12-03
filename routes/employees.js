@@ -4,7 +4,7 @@ var router = express.Router();
 
 // User can get all employee list
 router.get('/', async function(req, res, next) {
-  const employees = await Employee.find({}, '-__v -_id');
+  const employees = await Employee.find({}, '-__v');
   res.json(employees);
 });
 

@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 mongoose.connect('mongodb+srv://HengZhou:zh514032259@cluster0.xinik57.mongodb.net/COMP3123_Assignment1');
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/api/v1/user', usersRouter);
 app.use('/api/v1/emp/employees', employeesRouter);
